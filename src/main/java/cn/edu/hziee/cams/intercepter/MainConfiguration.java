@@ -13,7 +13,7 @@ public class MainConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginIntercepter())
-                .addPathPatterns("/user")
+                .addPathPatterns("/user","/admin")
                 .excludePathPatterns("/login","/checkLogin",
                         "/static/**");
     }

@@ -83,12 +83,11 @@ public class ActivitiController {
 
 
     /**
-     * @return java.lang.String
-     * @Author MRC
-     * @Description //TODO 创建模型
-     * @Date 11:10 2019/8/3
-     * @Param []
-     **/
+     *
+     * @param request
+     * @param response
+     * @return String
+     */
     @RequestMapping("createModel")
     public String createModel(HttpServletRequest request, HttpServletResponse response) {
 
@@ -301,7 +300,7 @@ public class ActivitiController {
      **/
     @RequestMapping("completeTasks")
     @ResponseBody
-    public com.alibaba.fastjson.JSONObject completeTasks(@RequestParam Map<String, Object> param) {
+    public JSONObject completeTasks(@RequestParam Map<String, Object> param) {
 
 
         String taskId = (String) param.get("taskId");
@@ -314,6 +313,7 @@ public class ActivitiController {
         Task task = this.taskService.createTaskQuery().taskId(taskId).singleResult();
 
         taskService.complete(task.getId(), param);
+
 
         return JsonUtil.getSuccessJson("流程已确认");
 

@@ -3,6 +3,8 @@ package cn.edu.hziee.cams.intercepter;
 /**
  * Created by HuangChao on 2021/3/24
  */
+import cn.edu.hziee.cams.entity.Admin;
+import cn.edu.hziee.cams.entity.User;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -16,14 +18,36 @@ public class LoginIntercepter implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //获取请求的URL
         String url = request.getRequestURI();
-        //获取Session
-        if (null == null) {//此处需要判断是否登录
-            // 未登录，重定向到登录页
-            response.sendRedirect("/login");
-            return false;
+        if (url.matches("/user")){
+            request.getSession().setAttribute("admin",null);
+            User user = (User)request.getSession().getAttribute("user");
+            if (null==user){
+                response.sendRedirect("/login");
+                return false;
+            }else {
+                return true;
+            }
+        }else if (url.matches("/admin")){
+            request.getSession().setAttribute("user",null);
+            Admin admin = (Admin) request.getSession().getAttribute("admin");
+            if (null==admin){
+                response.sendRedirect("/login");
+                return false;
+            }else {
+                return true;
+            }
         }else {
             return true;
         }
+//        //获取Session
+//        User user = (User)request.getSession().getAttribute("user");
+//        Admin admin = (Admin) request.getSession().getAttribute("admin");
+//        if (null == user&&null==admin) {
+//            response.sendRedirect("/login");
+//            return false;
+//        }else {
+//            return true;
+//        }
     }
 
     @Override
